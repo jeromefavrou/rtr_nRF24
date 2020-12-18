@@ -1,0 +1,30 @@
+#######INSTALL/UPDATE LIB#####
+chmod +x install
+./install
+
+
+######Compile Emmetter#######
+cd Emmetter
+chmod +x make
+./make
+
+### run ##
+sudo ./Radio2_4e
+
+
+######Compile Recever#######
+cd Recever
+chmod +x make
+./make
+
+
+### run ##
+sudo ./Radio2_4r
+
+
+
+###### PARAM   #####
+
+channel =>  cannal de transmition doit etre identique entre emetteur et recpteur , si canal pas disponible changer valeur
+inputGpio => gpio utiliser comme entrée pour etre envoyer par l' Emmeteur
+outputGpio => gpio utiliser comme sortie pour rendre l'état recu par l'emmeteur sur le recepteur

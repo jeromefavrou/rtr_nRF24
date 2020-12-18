@@ -1,0 +1,10 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
+mkdir nrf24l01
+cd nrf24l01
+git clone https://github.com/TMRh20/RF24.git
+cd RF24
+make
+sudo make install

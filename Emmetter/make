@@ -1,0 +1,3 @@
+g++ -Wall -fexceptions -O2  -c mainE.cpp -o mainE.o
+g++ -o Radio2_4e mainE.o  -s -lrf24-bcm
+
