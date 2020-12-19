@@ -67,7 +67,7 @@ bool Rf24Init(unique_ptr<RF24> & _radio , struct Rf24_t const &  _param)
     _radio->setRetries(15,15);
 
     //set puissance d'emission
-    _radio->setPALevel(RF24_PA_MAX);
+    _radio->setPALevel(RF24_PA_MIN);
 
     //pipe d'ecriture
     _radio->openWritingPipe(_param.address[0].data());
