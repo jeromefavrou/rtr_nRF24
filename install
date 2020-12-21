@@ -14,34 +14,3 @@ cd RF24
 make
 sudo make install
 
-cd $SCRIPTPATH/Recever/
-chmod +x make
-./make
-
-mkdir $INSTALL_PATH/
-
-cp Radio2_4r /opt/Recever/Radio2_4r
-chown root /opt/Recever/Radio2_4r
-chgrp root /opt/Recever/Radio2_4r
-chmod 774 /opt/Recever/Radio2_4r
-
-cp -r Lparam/ $INSTALL_PATH/Lparam
-
-DIR_NAME=/etc/init.d/Radio2_4r
-echo "installation en deamon"
-
-cp LuncherDeamon $DIR_NAME
-
-chown -R root $DIR_NAME
-chgrp -R root $DIR_NAME
-chmod -R 771 $DIR_NAME
-
-ln -s $DIR_NAME /etc/rc0.d/K01Radio2_4r
-ln -s $DIR_NAME /etc/rc1.d/K01Radio2_4r
-ln -s $DIR_NAME /etc/rc6.d/K01Radio2_4r
-ln -s $DIR_NAME /etc/rc2.d/S01Radio2_4r
-ln -s $DIR_NAME /etc/rc3.d/S01Radio2_4r
-ln -s $DIR_NAME /etc/rc4.d/S01Radio2_4r
-ln -s $DIR_NAME /etc/rc5.d/S01Radio2_4r
-
-sudo reboot 
