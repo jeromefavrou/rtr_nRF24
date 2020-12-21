@@ -1,3 +1,8 @@
+#! /bin/sh
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+INSTALL_PATH = /opt/Recever
+
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get dist-upgrade
@@ -8,3 +13,35 @@ git clone https://github.com/TMRh20/RF24.git
 cd RF24
 make
 sudo make install
+
+cd $SCRIPTPATH/Recever/
+chmod +x make
+./make
+
+mkdir $INSTALL_PATH/
+
+cp Radio2_4r $INSTALL_PATH/Radio2_4r
+chown root $INSTALL_PATH/Radio2_4r
+chgrp root $INSTALL_PATH/Radio2_4r
+chmod 774 $INSTALL_PATH/sbin/Radio2_4r
+
+cp -r Lparam/ $INSTALL_PATH/Lparam
+
+DIR_NAME=/etc/init.d/Radio2_4r
+echo "installation en deamon"
+
+cp LuncherDeamon $DIR_NAME
+
+chown -R root $DIR_NAME
+chgrp -R root $DIR_NAME
+chmod -R 771 $DIR_NAME
+
+ln -s $DIR_NAME /etc/rc0.d/K01Radio2_4r
+ln -s $DIR_NAME /etc/rc1.d/K01Radio2_4r
+ln -s $DIR_NAME /etc/rc6.d/K01Radio2_4r
+ln -s $DIR_NAME /etc/rc2.d/S01Radio2_4r
+ln -s $DIR_NAME /etc/rc3.d/S01Radio2_4r
+ln -s $DIR_NAME /etc/rc4.d/S01Radio2_4r
+ln -s $DIR_NAME /etc/rc5.d/S01Radio2_4r
+
+sudo reboot 
