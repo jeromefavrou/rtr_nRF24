@@ -20,10 +20,10 @@ chmod +x make
 
 mkdir $INSTALL_PATH/
 
-cp Radio2_4r $INSTALL_PATH/Radio2_4r
-chown root $INSTALL_PATH/Radio2_4r
-chgrp root $INSTALL_PATH/Radio2_4r
-chmod 774 $INSTALL_PATH/sbin/Radio2_4r
+cp Radio2_4r /opt/Recever/Radio2_4r
+chown root /opt/Recever/Radio2_4r
+chgrp root /opt/Recever/Radio2_4r
+chmod 774 /opt/Recever/Radio2_4r
 
 cp -r Lparam/ $INSTALL_PATH/Lparam
 
