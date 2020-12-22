@@ -23,6 +23,19 @@ chmod +x make
 sudo ./Radio2_4r
 
 
+### install daemon  ###
+cd Recever
+chmod +x install_deamon
+sudo ./install_deamon
+
+#now new location of daemon is /otp/Recever
+#after reboot you can use service
+
+sudo service Radio2_4r status
+sudo service Radio2_4r stop
+sudo service Radio2_4r start
+sudo service Radio2_4r restart
+
 
 ###### PARAM   #####
 
