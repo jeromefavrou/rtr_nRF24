@@ -12,7 +12,7 @@ mkdir /opt/Recever
 
 cp -r Lparam/ /opt/Recever/Lparam
 cp  make /opt/Recever/make
-chmod +x make
+chmod +x /opt/Recever/make
 cp mainR.cpp /opt/Recever/mainR.cpp
 
 cp LuncherDeamon $DIR_NAME
