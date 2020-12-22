@@ -23,7 +23,7 @@ chmod -R 771 $DIR_NAME
 
 #on compile le code source
 cd /opt/Recever/
-./make
+sudo ./make
 
 # suppression line dynamique si ceux si existe
 
