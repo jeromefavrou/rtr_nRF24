@@ -1,8 +1,9 @@
 // coding by Jerome Favrou in 2020
 
-#include <RF24.h>//https://github.com/nRF24/RF24
-#include <nRF24L01.h>//https://github.com/nRF24/RF24/blob/master/nRF24L01.h
-#include <SPI.h>//https://www.arduino.cc/en/reference/SPI
+#include <RF24.h> //https://github.com/nRF24/RF24
+#include <nRF24L01.h> //https://github.com/nRF24/RF24/blob/master/nRF24L01.h
+#include <SPI.h> //https://www.arduino.cc/en/reference/SPI
+#include <DI.h> //https://github.com/jeromefavrou/DI
 
 #define DEBUG
 
@@ -26,6 +27,9 @@ const int channel = 0;
 Pin_t CSN = 7;
 Pin_t CE = 8;
 
+DI bpSim ;
+DI magnetiqueSig ;
+
 RF24* radio;
 
 template<typename T> inline void printLog(T const & msg)
@@ -45,6 +49,7 @@ bool Rf24Init(RF24 * _radio )
     _radio->begin();
 
       // set spi speed horloge to 8Mhz ( 16/2 )
+      // spi raspberry a 8 Mhz defaut arduino 4 Mhz
      SPI.setClockDivider(SPI_CLOCK_DIV2)
 
     //init channel
@@ -66,9 +71,11 @@ bool Rf24Init(RF24 * _radio )
     _radio->setAutoAck(true);
 
     //definition de la taille de la somme de control
+    //petit CRC pour dinminuer la charge de donner a faible debit
     _radio->setCRCLength(RF24_CRC_8);
 
     //definition du debit d'echange
+    //debit faible pour augmenter la porté du signal
     _radio->setDataRate(RF24_250KBPS);
 
     // definition clair du mode d'ecoute
@@ -101,10 +108,42 @@ void setup()
 
     Rf24Init(radio);
 
+    bpSim.init(4,INPUT,DI::Signal::PULL_UP);
+  
+    bpSim.set_filter_freq(20.0);
+
+    magnetiqueSig.init(5,INPUT,DI::Signal::PULL_UP);
+  
+    magnetiqueSig.set_filter_freq(20.0);
+
     printLog<String>(F("Initialize end System start"));
 }
 
 void loop()
 {
+    bpSim.read(DI::Filter::PASS_LOW)
+    magnetiqueSig.read(DI::Filter::PASS_LOW)
 
+    if(bp.n_fixed() || magnetiqueSig.n_fixed())
+    {
+        bool stat = false;
+        radio->write(&stat , sizeof(bool))
+
+        if(!radio->write(&stat , sizeof(bool)))
+            printLog<String>(F("fail send 0"));
+        else
+            printLog<String>(F("succes send 0"));
+    }
+
+    if(bp.p_fixed() || magnetiqueSig.p_fixed() )
+    {
+        bool stat = true;
+
+        if(!radio->write(&stat , sizeof(bool)))
+            printLog<String>(F("fail send 1"));
+        else
+            printLog<String>(F("succes send 1"));
+    }
+
+    delay(50)
 }
